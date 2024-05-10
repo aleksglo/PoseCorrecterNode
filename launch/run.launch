@@ -5,14 +5,18 @@
     <!-- ===== -->
     <!-- Args  -->
     <!-- ===== -->
+    <param name="/use_sim_time" value="true"/>
 
     <!-- ===== -->
     <!-- Nodes -->
     <!-- ===== -->
 
+    
+    <!-- Launch the Python node -->
+    <node name="pose_corrector" pkg="pose_corrector" type="pose_corrector_node.py" output="screen" />
 
     <!-- ====== -->
     <!-- Launch -->
     <!-- ====== -->
-
+r
 </launch>

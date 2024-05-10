@@ -5,7 +5,7 @@ from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
-    scripts=['src/pose_corrector/pose_corrector_script.py'],
+    scripts=['src/pose_corrector/pose_corrector_node.py'],
     packages=['pose_corrector'],
     package_dir={'': 'src'},
     requires=['rospy', 'std_msgs']
