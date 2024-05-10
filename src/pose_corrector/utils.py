@@ -12,7 +12,7 @@ import yaml
 
 
 def mask_images_based_on_distance(color_image, depth_image, min_distance = 250, max_distance=450, mask_end_effector=True):
- 
+   
     mask_distance_thresholding = (depth_image > min_distance) & (depth_image < max_distance)
 
     if mask_end_effector:
