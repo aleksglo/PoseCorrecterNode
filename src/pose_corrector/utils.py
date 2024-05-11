@@ -3,7 +3,6 @@ import cv2
 import math
 
 
-
 def mask_images_based_on_distance(color_image, depth_image, min_distance = 250, max_distance=450, mask_end_effector=True):
    
     mask_distance_thresholding = (depth_image > min_distance) & (depth_image < max_distance)
@@ -18,6 +17,16 @@ def mask_images_based_on_distance(color_image, depth_image, min_distance = 250, 
     masked_depth_image = apply_mask(depth_image, mask)
 
     return mask, masked_color_image, masked_depth_image
+
+def remove_circle_from_mask(mask, center=(393, 480), radius=60):
+    # quick hack to improve pca results
+    circle_mask = np.zeros_like(mask, dtype=np.uint8)
+    circle_mask = cv2.circle(circle_mask, center, radius, (255,255,255), -1).astype(bool)
+    #remove bottom row from mask
+    circle_mask[-20:, :] = True
+    circle_mask = np.bitwise_not(circle_mask)
+    new_mask = np.bitwise_and(mask, circle_mask)
+    return new_mask 
 
 def get_end_effector_mask():
     image_width = 640
@@ -59,11 +68,16 @@ def detect_hands_by_skin_color(image_rgb, detected_pixel_threshold = 200, image_
         return False
     
 def get_inboard_rotation_around_vertical_axis(mask):  
+    # removing bottom from inboard point cloud,  quick hack to improve pca results
+    mask = remove_circle_from_mask(mask, center=(393, 480), radius=60)
+    # if mask is very small, we classify the image as bad (angle 0)
+    if (np.count_nonzero(mask) < 50):
+        return 0, np.array([393, 480]), np.array([0, -1])
+
     mask_pixel_coords = get_mask_pixel_coordinates(mask)
     mean, eigenvectors, eigenvalues = compute_pca(mask_pixel_coords)
 
     rotation_vector = eigenvectors[0]
-
     rotation_vector = make_rot_vec_negative_in_y_direction(rotation_vector)
     angle = math.atan2(rotation_vector[1], rotation_vector[0]) * -1 # orientation in radians, -1 because y axis is inverted on image
     
