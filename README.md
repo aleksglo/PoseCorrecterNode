@@ -1,6 +1,8 @@
 # Pose Corrector Node
 
-A ros node that estimates the 6D pose of an metallic object (named `inboard`) object using RGB-D images.
+A ros node that estimates the 6D pose of a metallic object (named `inboard`) object using RGB-D images.
+
+![pose_estimation](docs/imgs/pose_estimation.gif)
 
 ## Usage
 
@@ -12,13 +14,12 @@ roslaunch pose_corrector run.launch
 
 ## Task 1 and 2
 
-The processed images can be downloaded from [Dropbox](https://www.example.com).  
+The processed images can be downloaded from [Dropbox](https://www.dropbox.com/scl/fi/og7kas238odw1x1mk1zuo/solution_media.zip?rlkey=qs1ed9kjofulw2yess5tr18qg&st=gtj7239w&dl=0).  
 The dataset images were processed using `pose_corrector_task_1_and_2.py`.
 
 ### Depth Segmentation and PCA
 
-The images are segmented using the depth information.
-To estimate the onboard angle PCA is performed on the image mask.
+The images are segmented based on depth image distances. PCA is then conducted on the resulting image mask to estimate the onboard angle.
 
 ![segmentation_pca_example.png](docs/imgs/segmentation_pca_example.png)
 
@@ -29,18 +30,16 @@ In the future hands can be segmented and removed from the image masks to enable 
 
 ## Task 3
 
-![pose_estimation](docs/imgs/pose_estimation.gif)
-
 To demo the pose estimator online, a python ros node `pose_corrector_node.py` was implemented. The node subscribes to the topics from the provided rosbag.
 To run the pose estimation node, see [Usage](##Usage).
 
 ### ICP Registration
 
-To estimate the pose of the observed inboard, the point cloud model of the inboard is registered  with the point cloud captured by the camera. The icp registration pipeline is only applied to images  where the inboard is upright enough (good), as determined by angle detector in task 2. The detected angle is used to provide an initial transformation for the ICP algorithm.
+To estimate the pose of the observed inboard, the point cloud model of the inboard is registered with the point cloud captured by the camera. The ICP registration pipeline is only applied to images where the inboard is upright enough (good), as determined by the angle detector in task 2. The detected angle is used to provide an initial transformation for the ICP algorithm.
 
 ![ICP](docs/imgs/icp_example.png)
 
-*The camera pointcloud (blue) aligned with the inboard model pointcloud (yellow)*
+*The aligned inboard model point cloud (yellow) with camera point cloud (blue)*
 
 ### C++ Node
 

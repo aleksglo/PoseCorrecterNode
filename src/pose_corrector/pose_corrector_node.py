@@ -25,6 +25,7 @@ class PoseCorrectorNode:
 
         inboard_model_dir = Path(rospy.get_param("inboard_model_dir"))
         camera_intrinsic_yaml_path = rospy.get_param("camera_intrinsic_yaml")
+        self.camera_intrinsics = utils_o3d.read_camera_intrinsic(camera_intrinsic_yaml_path)
 
         self.color_sub = Subscriber('/camera/aligned_depth_to_color/image_raw', Image)
         self.depth_sub = Subscriber('/camera/color/image_raw', Image)
@@ -41,7 +42,6 @@ class PoseCorrectorNode:
 
         self.voxel_size = 0.005
         self.inboard_model_pcl = utils_o3d.load_inboard_model_pcl(str(inboard_model_dir / 'japanese_part.stl'), str(inboard_model_dir / 'inboard.png'), self.voxel_size)
-        self.camera_intrinsics = utils_o3d.read_camera_intrinsic(camera_intrinsic_yaml_path)
 
     
     def image_callback(self, depth_image_msg, color_image_msg):
