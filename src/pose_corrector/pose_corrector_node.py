@@ -45,9 +45,6 @@ class PoseCorrectorNode:
         self.voxel_size = 0.005
         self.inboard_model_pcl = self.inboard_model_pcl.voxel_down_sample(self.voxel_size)
 
-
-    def callback(self, data):
-        rospy.loginfo("I heard: %s", data.data)
     
     def image_callback(self, depth_image_msg, color_image_msg):
         color_image_rgb = self.bridge.imgmsg_to_cv2(color_image_msg)
