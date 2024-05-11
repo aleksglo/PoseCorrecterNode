@@ -12,20 +12,20 @@ from geometry_msgs.msg import PoseStamped
 from cv_bridge import CvBridge
 from message_filters import Subscriber, ApproximateTimeSynchronizer
 
+from pathlib import Path
+
 from pose_corrector.utils import *
 import pose_corrector.utils_o3d as utils_o3d
 
 
-# todo add rosparam
-CAMERA_INTRINSIC_YAML_PATH = "/home/aleks/pose_corrector_data/dataset/inboard_rgbd/camera_params.yaml"
-PATH_PCL = "/home/aleks/pose_corrector_data/dataset/inboard_3d/inboard.ply"
-PATH_MESH = "/home/aleks/pose_corrector_data/dataset/inboard_3d/japanese_part.stl"
-PATH_MESH_TEXTURE = "/home/aleks/pose_corrector_data/dataset/inboard_3d/inboard.png"
 
 class PoseCorrectorNode:
     def __init__(self):
         rospy.init_node('pose_corrector', anonymous=True)
-           
+
+        inboard_model_dir = Path(rospy.get_param("inboard_model_dir"))
+        camera_intrinsic_yaml_path = rospy.get_param("camera_intrinsic_yaml")
+
         self.color_sub = Subscriber('/camera/aligned_depth_to_color/image_raw', Image)
         self.depth_sub = Subscriber('/camera/color/image_raw', Image)
 
@@ -39,11 +39,9 @@ class PoseCorrectorNode:
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
-        self.inboard_model_pcl = utils_o3d.load_inboard_model_pcl(PATH_MESH, PATH_MESH_TEXTURE)
-        self.camera_intrinsics = utils_o3d.read_camera_intrinsic(CAMERA_INTRINSIC_YAML_PATH)
-
         self.voxel_size = 0.005
-        self.inboard_model_pcl = self.inboard_model_pcl.voxel_down_sample(self.voxel_size)
+        self.inboard_model_pcl = utils_o3d.load_inboard_model_pcl(str(inboard_model_dir / 'japanese_part.stl'), str(inboard_model_dir / 'inboard.png'), self.voxel_size)
+        self.camera_intrinsics = utils_o3d.read_camera_intrinsic(camera_intrinsic_yaml_path)
 
     
     def image_callback(self, depth_image_msg, color_image_msg):
@@ -84,7 +82,7 @@ class PoseCorrectorNode:
 
         self.pose_pub.publish(pose_msg)
     
-        rospy.loginfo("Received synchronized color and depth images")
+        rospy.loginfo("Processed synchronized color and depth images")
 
     def create_PoseStamped(self, translation, quaternion, frame_id):
         pose_msg = PoseStamped()

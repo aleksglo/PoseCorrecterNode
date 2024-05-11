@@ -16,7 +16,7 @@
 
     
     <!-- Launch the Python node -->
-    <node name="pose_corrector" pkg="pose_corrector" type="pose_corrector_node.py" output="screen" />
+    <node name="pose_corrector" pkg="pose_corrector" type="pose_corrector" output="screen" />
 
     <!-- ====== -->
     <!-- Launch -->

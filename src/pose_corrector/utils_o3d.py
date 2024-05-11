@@ -4,7 +4,7 @@ import copy
 import yaml
 
 
-def load_inboard_model_pcl(path_mesh, path_mesh_texture):
+def load_inboard_model_pcl(path_mesh, path_mesh_texture, voxel_size=None):
     mesh = o3d.io.read_triangle_mesh(path_mesh, True)
     texture = o3d.io.read_image(path_mesh_texture)
     mesh.textures = [texture]
@@ -14,6 +14,9 @@ def load_inboard_model_pcl(path_mesh, path_mesh_texture):
     # scale model to mm
     pcl.scale(0.001, center=np.array([0,0,0]))
     pcl.estimate_normals()
+
+    if voxel_size is not None:
+        pcl = pcl.voxel_down_sample(voxel_size)
     return pcl
 
 def read_camera_intrinsic(camera_intrinsic_yaml_path):

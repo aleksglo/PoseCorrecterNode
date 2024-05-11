@@ -29,7 +29,7 @@ void image_callback(const ImageConstPtr& colorImageMsg, const ImageConstPtr& dep
     cv::Mat colorImageRgb = colorImagePtr->image;
     cv::Mat depthImage = depthImagePtr->image;
 
-
+	ROS_INFO("Received synchronized color and depth images");
 }
 
 int main(int argc, char** argv) {

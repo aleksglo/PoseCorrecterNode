@@ -8,8 +8,12 @@ A ros node that estimates the 6D pose of an metallic object (named `inboard`) ob
 roslaunch pose_corrector run.launch
 ```
 
-## Task 1
-
-## Task 2
+## Task 1 and 2
 
 ## Task 3
+
+### C++
+
+```bash
+roslaunch pose_corrector cpp.launch
+```
