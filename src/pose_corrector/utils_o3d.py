@@ -78,4 +78,4 @@ def get_initial_inboard_transformation(angle):
 def downsample_pcls(source_pcl, target_pcl, voxel_size=0.005):
     source_pcl = source_pcl.voxel_down_sample(voxel_size)
     camera_pcl = target_pcl.voxel_down_sample(voxel_size)
-    return source_pcl, target_pcl
+    return source_pcl, camera_pcl

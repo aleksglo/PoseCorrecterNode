@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /TF1/Frames1
       Splitter Ratio: 0.7823529243469238
     Tree Height: 435
   - Class: rviz/Selection
@@ -77,7 +78,7 @@ Visualization Manager:
         link5:
           Value: false
         link6:
-          Value: true
+          Value: false
         link7:
           Value: false
         root_link:
@@ -135,7 +136,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Axes Length: 0.25
-      Axes Radius: 0.05000000074505806
+      Axes Radius: 0.029999999329447746
       Class: rviz/Pose
       Color: 255; 25; 0
       Enabled: true
@@ -205,7 +206,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 2.108017683029175
+      Distance: 1.4098422527313232
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -221,9 +222,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8103976249694824
+      Pitch: 0.7603978514671326
       Target Frame: <Fixed Frame>
-      Yaw: -0.7427383661270142
+      Yaw: 5.230449676513672
     Saved: ~
 Window Geometry:
   Displays:

@@ -100,7 +100,7 @@ def draw_eigenvector_on_image(image, mean, eigenvector, angle):
     end_point = (end_point[0], end_point[1])
     end_point_off = (end_point[0] + 10, end_point[1] + 10)
  
-    cv2.putText(image, f'angle: {math.degrees(angle):.1f} deg', end_point_off , cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,0),2,cv2.LINE_AA)
+    cv2.putText(image, f'angle: {math.degrees(angle):.1f} deg', end_point_off , cv2.FONT_HERSHEY_SIMPLEX, 0.8,(0,0,0),2,cv2.LINE_AA)
     cv2.arrowedLine(image, center_coordinates, end_point, color=(0,255,0), thickness=3)  
     cv2.circle(image, center_coordinates, radius=5, color=(255,0,0) , thickness=-1) 
     return image
